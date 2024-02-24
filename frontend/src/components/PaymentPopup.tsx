@@ -15,11 +15,11 @@ interface PaymentPopupProps {
   transactionFees: number; // Additional fees, if any
 }
 
-const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, predefinedWallets, transactionCost, transactionFees }) => {
+const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, predefinedWallets, transactionCost }) => {
   const [step, setStep] = useState(1); // 1: Login, 2: Select Wallet, 3: Confirm Payment
   const [selectedWallet, setSelectedWallet] = useState('');
 
-  const totalCost = transactionCost + transactionFees;
+  const totalCost = transactionCost;
 
   const handleLogin = () => {
     setStep(2); // Proceed to wallet selection after "login"
@@ -74,9 +74,6 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({ open, onClose, predefinedWa
               </ListItem>
               <ListItem>
                 <ListItemText primary="Transaction Cost" secondary={`${transactionCost} ETH`} />
-              </ListItem>
-              <ListItem>
-                <ListItemText primary="Transaction Fees" secondary={`${transactionFees} ETH`} />
               </ListItem>
               <ListItem>
                 <ListItemText primary="Total Cost" secondary={`${totalCost} ETH`} />

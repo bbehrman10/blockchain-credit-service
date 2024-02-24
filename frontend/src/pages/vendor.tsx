@@ -31,8 +31,8 @@ const NFTMint = () => {
                     <Card>
                         <CardMedia
                             component="img"
-                            height="340"
-                            image="/path-to-your-nft-image.jpg" // Placeholder image
+                            height="400"
+                            image="/sample.png" // Placeholder image
                             alt="NFT Preview"
                         />
                     </Card>
@@ -70,7 +70,7 @@ const NFTMint = () => {
                     </CardContent>
                 </Grid>
             </Grid>
-            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} />}
+            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={1} transactionFees={.001} />}
         </Container>
     );
 };
