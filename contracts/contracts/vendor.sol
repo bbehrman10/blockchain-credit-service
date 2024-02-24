@@ -9,8 +9,11 @@ contract VendorExample is ERC721Enumerable, Ownable {
 
     constructor() ERC721("MyNFT", "mNFT") Ownable(msg.sender){}
 
-    function mint(address to) public {
-        _currentTokenID += 1; // Increment the token ID
-        _mint(to, _currentTokenID); // Mint the new token
+    function mint(address to, uint256 amount) public {
+        require(amount > 0, "Amount must be greater than 0");
+        for (uint256 i = 0; i < amount; i++) {
+            _currentTokenID += 1; // Increment the token ID before minting to ensure each NFT has a unique ID
+            _mint(to, _currentTokenID); // Mint the new token
+        }
     }
 }
