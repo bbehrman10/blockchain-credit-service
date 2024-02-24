@@ -3,3 +3,5 @@ const nftData = {
     description: "Sample vendor for NFT minting",
     price: .05,
 }
+
+export default nftData;

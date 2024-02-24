@@ -3,11 +3,12 @@ import { Container, Typography, Button, Grid, Card, CardMedia, CardContent, Text
 import DashboardLayout from '@/components/DashboardLayout';
 import PaymentPopup from '@/components/PaymentPopup'; // Ensure this path is correct
 import userData from '../data/sampleData'; // Adjust the import path as needed
+import nftData from '../data/nftData'; // Adjust the import path as needed
 
 const NFTMint = () => {
     const [quantity, setQuantity] = useState(1);
     const [isPopupOpen, setIsPopupOpen] = useState(false); // State to control popup visibility
-    const basePrice = 0.05; // Base price for one NFT in ETH
+    const basePrice = nftData.price // Base price for one NFT in ETH
     const [totalPrice, setTotalPrice] = useState(quantity * basePrice);
 
     const handleQuantityChange = (event) => {
@@ -52,7 +53,7 @@ const NFTMint = () => {
                             sx={{ mb: 2 }}
                         />
                         <Typography variant="h6" gutterBottom>
-                            Total Price: {totalPrice} ETH
+                            Mint Price: {totalPrice} ETH
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
                             <Button variant="contained" color="primary" onClick={handleMintNFT}>
@@ -70,7 +71,7 @@ const NFTMint = () => {
                     </CardContent>
                 </Grid>
             </Grid>
-            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={1} transactionFees={.001} />}
+            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={totalPrice} transactionFees={.001} />}
         </Container>
     );
 };
