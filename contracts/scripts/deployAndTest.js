@@ -33,11 +33,6 @@ async function main() {
     } catch (error) {
         console.error("Error calling BCS contract:", error);
     }
-
-    // // Example of querying the token owner after minting
-    // const tokenId = 1; // Assuming the token ID you're interested in is 1
-    // const ownerOfToken = await vendor.ownerOf(tokenId);
-    // console.log(`Owner of token ${tokenId}:`, ownerOfToken);
 }
 
 main().catch((error) => {

@@ -1,0 +1,1 @@
+const {User, Card, CreditActivity, VendorClient, sequelize} = require('../../models');
