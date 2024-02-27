@@ -1,4 +1,4 @@
-const { Card, Statement, CreditActivity, sequelize} = require('../../models');
+const { Card, Statement, sequelize} = require('../../models');
 
 exports.createCard = async (creditLimit, expiryDate, userID) => {
     try {
@@ -22,19 +22,9 @@ exports.updateCard = async (cardID, creditLimit, expiryDate, isActive) => {};
 
 exports.createStatement = async (userID, cardID, statementDate, statementAmount) => {};
 
-exports.updateStatement = async (statementID, statementAmount) => {};
+exports.payStatement = async (statementID, paymentAmount) => {};
 
-exports.getUserStatements = async (userID) => {};
-
-exports.getStatement = async (cardID) => {};
-
-exports.updateStatement = async (statementID, statementAmount) => {};
-
-exports.createCreditActivity = async (cardID, statementID, clientID, activityDate, activityAmount, activityType) => {};
-
-exports.getCreditActivity = async (cardID) => {};
-
-exports.updateCreditActivity = async (activityID, activityAmount, activityType) => {};
+exports.getLatestStatement = async (cardID) => {};
 
 
 
