@@ -5,9 +5,8 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('VendorClients', {
       ClientID: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         primaryKey: true,
-        autoIncrement: true
       },
       Description: {
         type: Sequelize.STRING,
@@ -28,6 +27,10 @@ module.exports = {
           model: 'Vendors',
           key: 'VendorID'
         }
+      },
+      WhiteListedURL: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         type: Sequelize.DATE,

@@ -1,39 +1,32 @@
 const express = require('express');
 const router = express.Router();
-const { processVendorTransaction } = require('../services/blockchain');
-const { retreiveVendorClientInfo } = require('../services/vendors');
+const director = require('../services/director');
 
-router.post('/transaction', async (req, res) => {
-    const { userAddress, clientId, functionInputs } = req.body;
-    //check if vendor client ID is valid
+// User Pays Vendor using BCS Pay 
+router.post('/payVendor', async (req, res) => {
+    const { userID, vendorID, amount, cardID, statementID, clientID, activityDate, activityDescription } = req.body;
     try {
-        const vendorClient = await retreiveVendorClientInfo(clientId);
-        if (!vendorClient) {
-            return res.status(404).json({ success: false, message: "client and vendor id don't match" });
-        }
-        //check if requesting url matches vendor client url
-        // if (req.get('origin') !== vendorClient.whiteListedUrl) {
-        //     return res.status(403).json({ success: false, message: "request origin does not match client url" });
-        // }
-    } catch (error){
-        console.error(error);
-        return res.status(400).json({ success: false, message: "cannot connect to backend" });
-    }
-    
-    //submit payment
-    try {
-        const transactionReceipt = await processVendorTransaction({
-            vendorClient,
-            userAddress,
-            functionInputs
-        });
-
-        // Update database and respond to the request
-        res.json({ success: true, receipt: transactionReceipt });
+        await director.createCreditActivity(cardID, statementID, clientID, activityDate, amount, activityDescription);
+        res.status(200).send('Payment Successful');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Transaction failed" });
+        console.error('Error with payment', error);
+        res.status(500).send('Error with payment');
     }
 });
+
+// User Pays BCS Statement using Crypto or Fiat
+router.post('/payStatement', async (req, res) => {
+    const { statementID, paymentAmount } = req.body;
+    try {
+        await director.payments.payStatement(statementID, paymentAmount);
+        res.status(200).send('Payment Successful');
+    } catch (error) {
+        console.error('Error with payment', error);
+        res.status(500).send('Error with payment');
+    }
+});
+
+
+
 
 module.exports = router;

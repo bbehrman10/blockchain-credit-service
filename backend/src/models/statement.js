@@ -18,6 +18,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             defaultValue: false
         },
+        PaymentConfirmation: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        StatementDate: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
+        },
     }, {
         sequelize,
         modelName: 'Statement',

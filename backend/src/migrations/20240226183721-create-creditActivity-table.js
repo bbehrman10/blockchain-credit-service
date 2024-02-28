@@ -21,8 +21,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      BlockchainTransactionID: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       VendorClientID: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true,
         references: {
           model: 'VendorClients',

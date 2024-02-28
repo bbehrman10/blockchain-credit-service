@@ -26,6 +26,14 @@ module.exports = {
         allowNull: false,
         defaultValue: false
       },
+      PaymentConfirmation: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      StatementDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false
