@@ -1,5 +1,5 @@
-const { creditMgmt } = require('../dataAccess/database/creditMgmt');
-const { creditCheck } = require('../external/creditCheck');
+const  creditMgmt  = require('../dataAccess/database/creditMgmt');
+const  creditCheck  = require('../external/creditCheck');
 
 exports.creditCheck = async (creditForm) => {
     try {
@@ -15,7 +15,7 @@ exports.createCard = async (userID) => {
     try {
         const card = {
             creditLimit: 10000,
-            expiryDate: null,
+            expiryDate: '2026-02-28 06:05:44.849+00',
             userID: userID
         }
         const newCard = await creditMgmt.createCard(card);

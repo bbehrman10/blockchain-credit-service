@@ -4,9 +4,9 @@ exports.createCreditActivity = async (activity) => {
     try {
         const creditActivity = await CreditActivity.create({
             CardID: activity.cardID,
-            ClientID: activity.clientID,
-            Amount: activity.Amount,
-            Type: activity.Type,
+            VendorClientID: activity.clientID,
+            Amount: activity.amount,
+            Type: activity.type,
             Status: 'Incomplete'
         });
         return creditActivity;

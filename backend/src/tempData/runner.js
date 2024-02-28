@@ -3,6 +3,7 @@ const users = require('./users');
 const vendors = require('./vendors');
 const vendorclients = require('./vendorClients');
 const cards = require('./cards');
+const tx = require('./tx');
 
 async function seedUsers() {
     const user1 = await director.user.createUser(users[0].Username, users[0].Email, users[0].Password);
@@ -27,12 +28,24 @@ async function seedCard() {
 
 }
 
+async function seedTransaction() {
+    // console.log(tx);
+    const tx1 = await director.vendor.payVendor(tx[0].CardID, tx[0].ClientID, tx[0].Amount, tx[0].Type);
+    console.log('Transaction created', tx1);
+}
+
+async function getClientID() {
+    const clientid = await director.vendor.getVendorClient('c7159a88-b2e3-4587-8828-424fed3cdd65'); 
+    console.log('ClientID', clientid);
+}
 
 function main() {
     // seedUsers();
     // seedVendors();
     // seedVendorClients();
     // getVendor(1);
+    // seedCard();
+    // seedTransaction() ;
 }
 
 main();

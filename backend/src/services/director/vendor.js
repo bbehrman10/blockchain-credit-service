@@ -46,6 +46,16 @@ exports.createVendorClient = async (description, contractAddress, functionSignat
     }
 }
 
+exports.getVendorClient = async (id) => {
+    try {
+        const vendorClient = await vendorMgmt.getVendorClient(id);
+        return vendorClient;
+    } catch (error) {
+        console.error('Error with connection', error);
+        throw error;
+    }
+}
+
 exports.payVendor = async (cardID, clientID, activityAmount, activityDescription) => {
     try {
         const vendorClient = await vendorMgmt.getVendorClient(clientID);
@@ -57,8 +67,8 @@ exports.payVendor = async (cardID, clientID, activityAmount, activityDescription
             description: activityDescription
         };
         const incompleteTx = await transactionMgmt.createCreditActivity(newActivity);
-        const bchainTID = await blockchain.purchase('0x343434', vendorClient.ContractAddress, vendorClient.FunctionSignature);
-        const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, bchainTID);
+        // const bchainTID = await blockchain.purchase('0x343434', vendorClient.ContractAddress, vendorClient.FunctionSignature);
+        const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, "bchainTID");
         return completeTx;
     } catch (error) {
         console.error('Error with processing transaction', error);
