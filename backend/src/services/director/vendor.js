@@ -68,7 +68,7 @@ exports.payVendor = async (cardID, clientID, activityAmount, activityDescription
         };
         const incompleteTx = await transactionMgmt.createCreditActivity(newActivity);
         // const bchainTID = await blockchain.purchase('0x343434', vendorClient.ContractAddress, vendorClient.FunctionSignature);
-        const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, "bchainTID");
+        const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, "bchainTID", 3000);
         return completeTx;
     } catch (error) {
         console.error('Error with processing transaction', error);

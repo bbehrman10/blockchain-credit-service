@@ -17,7 +17,7 @@ exports.createCard = async (cardData) => {
     }
 };
 
-exports.getCards = async ({ userID }) => {
+exports.getCards = async ( userID ) => {
     try {
         await sequelize.authenticate();
         const cards = await Card.findAll({
@@ -28,6 +28,19 @@ exports.getCards = async ({ userID }) => {
         console.error('Error fetching cards', error);
         throw error;
     }
+};
+
+exports.getCard = async ( cardID ) => {
+    try {
+        await sequelize.authenticate();
+        const card = await Card.findOne({
+            where: { CardID: cardID }
+        });
+        return card;
+    } catch (error) {
+        console.error('Error fetching card', error);
+        throw error;
+    }  
 };
 
 exports.updateCard = async (cardData) => {
@@ -65,7 +78,7 @@ exports.createStatement = async (statementData) => {
     }
 };
 
-exports.getCardActivity = async ({ cardID }) => {
+exports.getCardActivity = async ( cardID ) => {
     try {
         await sequelize.authenticate();
         const transactions = await CreditActivity.findAll({
@@ -80,20 +93,26 @@ exports.getCardActivity = async ({ cardID }) => {
     }
 }
 
-exports.getUserActivity = async ({ cardID }) => {
-    try {
-        await sequelize.authenticate();
-        const transactions = await CreditActivity.findAll({
-            where: { CardID: cardID },
-            order: [['createdAt', 'DESC']],
-            limit: 30
-        });
-        return transactions;
-    } catch (error) {
-        console.error('Error fetching user transactions', error);
-        throw error;
-    }
-}
+// exports.getUserActivity = async ({ userID }) => {
+//     try {
+//         await sequelize.authenticate();
+//         const transactions = await CreditActivity.findAll({
+//             include: [{
+//                 model: Card,
+//                 where: { UserID: userID }
+//             }],
+//             order: [['createdAt', 'DESC']], // Optional: Order by creation date
+//             limit: 30 // Optional: Limit the number of results
+//         });
+//         return transactions;
+//     } catch (error) {
+//         console.error('Error fetching user transactions', error);
+//         throw error;
+//     }
+// }
+
+
+
 
 
 exports.payStatement = async (paymentData) => {

@@ -9,6 +9,11 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      Label: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'My Card'
+      },
       UserID: {
         type: Sequelize.INTEGER,
         allowNull: false,

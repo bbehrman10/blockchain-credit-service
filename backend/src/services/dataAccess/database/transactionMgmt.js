@@ -30,11 +30,12 @@ exports.getCreditActivity = async (cardID) => {
     }
 };
 
-exports.updateActivity = async (activityID, bchainId) => {
+exports.updateActivity = async (activityID, bchainId, usdEquiv) => {
     try {
         const [numUpdated, updatedCreditActivity] = await CreditActivity.update({
             Status: "Complete",
             BlockchainTransactionID: bchainId,
+            USDEquivalent: usdEquiv
         }, {
             where: {
                 ActivityID: activityID

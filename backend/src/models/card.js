@@ -9,6 +9,11 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       autoIncrement: true
     },
+    Label: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'My Card'
+    },
     CreditLimit: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false

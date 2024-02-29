@@ -1,5 +1,5 @@
-const  creditMgmt  = require('../dataAccess/database/creditMgmt');
-const  creditCheck  = require('../external/creditCheck');
+const creditMgmt = require('../dataAccess/database/creditMgmt');
+const creditCheck = require('../external/creditCheck');
 
 exports.creditCheck = async (creditForm) => {
     try {
@@ -11,7 +11,7 @@ exports.creditCheck = async (creditForm) => {
     }
 }
 
-exports.createCard = async (userID) => { 
+exports.createCard = async (userID) => {
     try {
         const card = {
             creditLimit: 10000,
@@ -23,8 +23,9 @@ exports.createCard = async (userID) => {
     } catch (error) {
         console.error('Error creating card', error);
         throw error;
+    }
 }
-exports.getCards = async (UserID) => { 
+exports.getCards = async (UserID) => {
     try {
         const cards = await creditMgmt.getCards(UserID);
         return cards;
@@ -32,7 +33,17 @@ exports.getCards = async (UserID) => {
         console.error('Error fetching cards', error);
         throw error;
     }
- }
+}
+
+exports.getCard = async (cardID) => {
+    try {
+        const card = await creditMgmt.getCard(cardID);
+        return card;
+    } catch (error) {
+        console.error('Error fetching card', error);
+        throw error;
+    }
+};
 
 exports.getCreditActivity = async (cardID) => {
     try {
@@ -40,6 +51,17 @@ exports.getCreditActivity = async (cardID) => {
         return creditActivity;
     } catch (error) {
         console.error('Error getting credit activity', error);
+        throw error;
+    }
+
+}
+
+exports.getUserCreditActivity = async (userID) => {
+    try {
+        const userActivity = await creditMgmt.getUserActivity(userID);
+        return userActivity;
+    } catch (error) {
+        console.error('Error fetching user activity', error);
         throw error;
     }
 
@@ -60,6 +82,5 @@ exports.createStatement = async (userID, cardID, statementDate, statementAmount)
         throw error;
     }
 }
-exports.payStatement = async (statementID, paymentAmount) => {}
+exports.payStatement = async (statementID, paymentAmount) => { }
 //doing statements later
-}

@@ -20,6 +20,7 @@ async function seedVendors() {
 async function seedVendorClients() {
     const vendorClient1 = await director.vendor.createVendorClient(vendorclients[0].Description, vendorclients[0].ContractAddress, vendorclients[0].FunctionSignature, vendorclients[0].WhiteListedURL, vendorclients[0].VendorID);
     console.log('Vendor client created', vendorClient1);
+    return vendorClient1.ClientID;
 }
 
 async function seedCard() {
@@ -28,9 +29,9 @@ async function seedCard() {
 
 }
 
-async function seedTransaction() {
+async function seedTransaction(id) {
     // console.log(tx);
-    const tx1 = await director.vendor.payVendor(tx[0].CardID, tx[0].ClientID, tx[0].Amount, tx[0].Type);
+    const tx1 = await director.vendor.payVendor(tx[0].CardID, id, tx[0].Amount, tx[0].Type);
     console.log('Transaction created', tx1);
 }
 
@@ -39,13 +40,19 @@ async function getClientID() {
     console.log('ClientID', clientid);
 }
 
-function main() {
-    // seedUsers();
-    // seedVendors();
-    // seedVendorClients();
-    // getVendor(1);
-    // seedCard();
-    // seedTransaction() ;
+async function getCards() {
+    const cards = await director.credit.getCards(1);
+    console.log('Cards', cards);
+
+}
+
+async function main() {
+    // await seedUsers();
+    // await seedCard();
+    // await seedVendors();
+    // const id = await seedVendorClients();
+    await seedTransaction('477771de-52a5-417f-8e81-b851701c2727') ;
+    // await getCards();
 }
 
 main();

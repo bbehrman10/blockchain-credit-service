@@ -14,8 +14,12 @@ module.exports = {
         allowNull: false
       },
       Amount: {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.DECIMAL(10, 4),
         allowNull: false
+      },
+      USDEquivalent: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: true
       },
       Status: {
         type: Sequelize.STRING,

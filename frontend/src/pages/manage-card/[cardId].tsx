@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import DashboardLayout from '../../components/DashboardLayout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Typography, Table, TableBody, TableCell, TableHead, TableRow, TextField, Paper, Button, Modal, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel, Box } from '@mui/material';
-import userData from '../../data/sampleData'; // Adjust import path as needed
+import axios from 'axios';
+const userID = "1"; // Adjust as needed
 
 const modalStyle = {
   position: 'absolute',
@@ -20,7 +21,11 @@ const modalStyle = {
 
 const ManageCard = () => {
   const router = useRouter();
-  const { cardId } = router.query;
+  const { cardId }: { cardId: string } = router.query as { cardId: string };
+
+  const [card, setCard] = useState(null);
+  const [cardTxData, setCardTxData] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('ETH');
   const [paymentAmount, setPaymentAmount] = useState('');
@@ -30,30 +35,41 @@ const ManageCard = () => {
   const handlePaymentMethodChange = (event: React.ChangeEvent<HTMLInputElement>) => setPaymentMethod(event.target.value);
   const handlePaymentAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => setPaymentAmount(event.target.value);
 
-  // Find the card by cardId
-  const card = userData.cards.find(card => card.cardId === cardId);
+  //in case of refresh or direct access to the page we need to fetch the card data
+  const getPageData = async (cardid: string) => {
+    console.log(userID, cardid);
+    const cardData = await axios.get(`http://localhost:3001/api/users/${userID}/cards/${cardid}`);
+    const activityData = await axios.get(`http://localhost:3001/api/users/card-activity/${cardid}`);
+    setCard(cardData.data);
+    setCardTxData(activityData.data);
+  }
+  // Get the last 5 transactions for this card
+  const lastFiveTransactions = async () => {
+    return [];
+  }
+
+  useEffect(() => {
+    // console.log('RUNNING THE USE EFFECT FUNCTION');
+    getPageData(cardId);
+  }, []);
 
   if (!card) {
     return <p>Card not found</p>; // Or handle as needed
   }
 
-  // Get the last 5 transactions for this card
-  const lastFiveTransactions = card.transactions
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 5);
 
   return (
     <DashboardLayout>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Manage Card - Ending in {card.cardNumber.slice(-4)}
+          Manage Card - {card.Label}
         </Typography>
 
         {/* Card Details */}
-        <Typography variant="h6">Current Balance: ${card.balance}</Typography>
-        <Typography variant="h6">Statement Balance: ${card.statementBalance}</Typography>
-        <Typography variant="h6">Statement Due Date: {card.dueDate}</Typography>
-        <Typography variant="h6">Rewards: {card.rewards} Points</Typography>
+        <Typography variant="h6">Current Balance: ${card.CurrentBalance}</Typography>
+        <Typography variant="h6">Statement Balance: </Typography>
+        <Typography variant="h6">Statement Due Date: </Typography>
+        <Typography variant="h6">Rewards:</Typography>
 
         <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleOpen}>
           Pay Statement
@@ -90,29 +106,33 @@ const ManageCard = () => {
             </Button>
           </Box>
         </Modal>
-        {/* Last 5 Transactions */}
-        <Typography variant="h5" sx={{ mt: 4 }}>Last 5 Transactions</Typography>
+        {/* RecentTransactions */}
+        <Typography variant="h5" sx={{ mt: 4 }}>Recent Transactions</Typography>
         <Paper sx={{ width: '100%', overflow: 'hidden', mt: 2 }}>
           <Table aria-label="recent transactions">
             <TableHead>
               <TableRow>
                 <TableCell>Date</TableCell>
-                <TableCell>Type</TableCell>
+                <TableCell>Card Used</TableCell>
                 <TableCell>Amount (ETH)</TableCell>
                 <TableCell>USD Equivalent</TableCell>
-                <TableCell>Category</TableCell>
                 <TableCell>Vendor</TableCell>
+                <TableCell>Type</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Blockchain Transaction ID</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {lastFiveTransactions.map((transaction, index) => (
-                <TableRow key={index}>
-                  <TableCell>{transaction.date}</TableCell>
-                  <TableCell>{transaction.type}</TableCell>
-                  <TableCell>{transaction.amount}</TableCell>
-                  <TableCell>${transaction.usdEquivalent}</TableCell>
-                  <TableCell>{transaction.category}</TableCell>
-                  <TableCell>{transaction.vendor}</TableCell>
+              {cardTxData.map((transaction, index) => (
+                <TableRow key={transaction.ActivityID}>
+                  <TableCell>{transaction.createdAt}</TableCell>
+                  <TableCell>{transaction.CardID}</TableCell> {/* Displaying last 4 digits */}
+                  <TableCell>{transaction.Amount} ETH</TableCell>
+                  <TableCell>${transaction.USDEquivalent}</TableCell>
+                  <TableCell>{transaction.VendorClientID}</TableCell>
+                  <TableCell>{transaction.Type}</TableCell>
+                  <TableCell>{transaction.Status}</TableCell>
+                  <TableCell>{transaction.BlockchainTransactionID}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -3,10 +3,16 @@ import { Box, Card, CardHeader, CardContent, Table, TableBody, TableCell, TableH
 import Link from 'next/link';
 import userData from '../data/sampleData.js'; // Import the user data
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // For the "+" icon
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+const userID = 1;
 
 
 export default function Dashboard() {
+
+    const [cards, setCards] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
     // Aggregate transactions from all cards for the user
     const allTransactionsWithCardId = userData.cards.flatMap(card =>
         card.transactions.map(transaction => ({
@@ -20,9 +26,23 @@ export default function Dashboard() {
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 5);
 
-    // Calculate total balance and rewards (assuming these are now user-level properties)
-    const totalBalanceUSD = userData.cards.reduce((acc, card) => acc + card.balance, 0);
-    const totalRewards = userData.cards.reduce((acc, card) => acc + card.rewards, 0);
+    const getUserCards = async () => {
+        const response = await axios.get(`http://localhost:3001/api/users/${userID}/cards`);
+        await setCards(response.data);
+    };
+
+    const getCardTransactions = async (id) => {
+        const response = await axios.get(`http://localhost:3001/api/users/card-activity/${id}`);
+        await setTransactions(response.data);
+    }
+
+    useEffect(() => {
+        getUserCards();
+    }, []);
+
+    useEffect(() => {
+        getCardTransactions(1);
+    }, [cards]);
 
     return (
         <DashboardLayout>
@@ -35,9 +55,9 @@ export default function Dashboard() {
                         Cards Overview
                     </Typography>
                     <Grid container spacing={2}>
-                        {userData.cards.map((card) => (
-                            <Grid item xs={12} md={6} lg={4} key={card.cardId}>
-                                <Link href={`/manage-card/${card.cardId}`} passHref style={{ textDecoration: 'none' }}>
+                        {cards.map((card) => (
+                            <Grid item xs={12} md={6} lg={4} key={card.CardID}>
+                                <Link href={`/manage-card/${card.CardID}`} passHref style={{ textDecoration: 'none' }}>
                                     <Card>
                                         <CardMedia
                                             component="img"
@@ -46,9 +66,10 @@ export default function Dashboard() {
                                             alt="Credit Card Image"
                                         />
                                         <CardContent>
-                                            <Typography variant="h6">Card Ending in {card.cardNumber.slice(-4)}</Typography>
-                                            <Typography variant="body1">Current Balance: ${card.balance.toLocaleString()}</Typography>
-                                            <Typography variant="body1">Statement Due Date: {card.dueDate}</Typography>
+                                            <Typography variant="h6">{card.Label}</Typography>
+                                            <Typography variant="body1">Credit Limit {card.CreditLimit} </Typography>
+                                            <Typography variant="body1">Current Balance: {card.CurrentBalance} </Typography>
+                                            <Typography variant="body1">Statement Due Date: COMING SOON </Typography>
                                             {/* Additional card details can be added here */}
                                         </CardContent>
                                     </Card>
@@ -81,17 +102,21 @@ export default function Dashboard() {
                                         <TableCell>USD Equivalent</TableCell>
                                         <TableCell>Vendor</TableCell>
                                         <TableCell>Type</TableCell>
+                                        <TableCell>Status</TableCell>
+                                        <TableCell>Blockchain Transaction ID</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {lastFiveTransactions.map((transaction, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell>{transaction.date}</TableCell>
-                                            <TableCell>{transaction.cardNumber.slice(-4)}</TableCell> {/* Displaying last 4 digits */}
-                                            <TableCell>{transaction.amount} ETH</TableCell>
-                                            <TableCell>${transaction.usdEquivalent}</TableCell>
-                                            <TableCell>{transaction.vendor}</TableCell>
-                                            <TableCell>{transaction.type}</TableCell>
+                                    {transactions.map((transaction, index) => (
+                                        <TableRow key={transaction.ActivityID}>
+                                            <TableCell>{transaction.createdAt}</TableCell>
+                                            <TableCell>{transaction.CardID}</TableCell> {/* Displaying last 4 digits */}
+                                            <TableCell>{transaction.Amount} ETH</TableCell>
+                                            <TableCell>${transaction.USDEquivalent}</TableCell>
+                                            <TableCell>{transaction.VendorClientID}</TableCell>
+                                            <TableCell>{transaction.Type}</TableCell>
+                                            <TableCell>{transaction.Status}</TableCell>
+                                            <TableCell>{transaction.BlockchainTransactionID}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

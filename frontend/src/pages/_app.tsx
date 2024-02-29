@@ -2,73 +2,75 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-const darkTheme = createTheme({
+const lightTheme3 = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
-      main: '#36454F', // Charcoal
+      main: '#5E97F6', // Soft Blue
     },
     secondary: {
-      main: '#F99048', // Tangerine
+      main: '#FFD54F', // Sunshine Yellow
     },
     background: {
-      default: '#121212', // Dark background
-      paper: '#1e1e1e',
+      default: '#EDE7F6', // Light Lavender
+      paper: '#FFFFFF', // Pure White
     },
     error: {
-      main: '#FF5F52', // Adding an error color for completeness
+      main: '#E57373', // Soft Red for alerts
     },
     warning: {
-      main: '#FFC107', // Adding a warning color for completeness
+      main: '#FFB74D', // Light Orange for warnings
     },
     info: {
-      main: '#E5E4E2', // Platinum
+      main: '#64B5F6', // Sky Blue for information
     },
     success: {
-      main: '#4CAF50', // Adding a success color for completeness
+      main: '#81C784', // Pastel Green for success
     },
   },
   typography: {
     fontFamily: 'Roboto, sans-serif',
   },
   components: {
-    // Custom component styles can be added here
+    // You can add custom component styles here
   },
 });
+
 
 const darkTheme2 = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#512D6D', // Deep Purple
+      main: '#0D7377', // Teal
     },
     secondary: {
-      main: '#FFD700', // Gold
+      main: '#14FFEC', // Neon Green
     },
     background: {
-      default: '#2C2C2C', // Dark Grey
-      paper: '#423F3E', // Smoky Black
+      default: '#323232', // Dark Charcoal
+      paper: '#212121', // Almost Black
     },
     error: {
-      main: '#D32F2F', // For completeness
+      main: '#FF5252', // Bright Red for alerts
     },
     warning: {
-      main: '#FFA000', // For completeness
+      main: '#FFC107', // Amber for warnings
     },
     info: {
-      main: '#1976D2', // For completeness
+      main: '#2196F3', // Bright Blue for information
     },
     success: {
-      main: '#388E3C', // For completeness
+      main: '#4CAF50', // Green for success
     },
   },
   typography: {
     fontFamily: 'Roboto, sans-serif',
   },
   components: {
-    // Custom component styles can be added here
+    // You can add custom component styles here
   },
 });
+
 
 
 
@@ -142,7 +144,7 @@ const lightTheme2 = createTheme({
 
 function MyApp({ Component, pageProps }: { Component: React.ComponentType<any>, pageProps: any }) {
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={lightTheme3}>
       <CssBaseline /> {/* This ensures a consistent baseline across browsers */}
       <Component {...pageProps} />
     </ThemeProvider>
