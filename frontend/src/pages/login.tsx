@@ -1,19 +1,30 @@
-// src/pages/login.tsx or src/app/pages/login.tsx
 import { useState } from 'react';
 import { Button, Container, TextField, Typography, Box } from '@mui/material';
 import Link from 'next/link';
-
+import axios from 'axios';
+import router from 'next/router';
 
 export default function Login() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // Handle login logic here
-    console.log(username, password);
-    // Redirect to dashboard or show an error message
-  };
+    console.log(email, password);
+    try {
+      const login = await axios.post('http://localhost:3001/api/users/login', {
+        email,
+        password
+      });
+      console.log('Login response:', login.data);
+      // Redirect the user to the dashboard
+      router.push('/dashboard');
+
+      } catch (error) {
+      console.error('Login error:', error);
+      // Show error message to the user
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -28,18 +39,18 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
             autoFocus
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"

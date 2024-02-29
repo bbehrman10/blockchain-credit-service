@@ -42,7 +42,7 @@ exports.checkLogin = async (email, password) => {
         if (!user) {
             return null; // User not found
         }
-        const validPassword = await bcrypt.compare(password, user.Password);
+        const validPassword = await bcrypt.compare(password, user.PasswordHash);
         if (validPassword) {
             return user; // Password is valid
         }

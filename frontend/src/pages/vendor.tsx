@@ -27,50 +27,52 @@ const NFTMint = () => {
 
     return (
         <Container maxWidth="md" sx={{ mt: 4 }}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                    <Card>
-                        <CardMedia
-                            component="img"
-                            height="400"
-                            image="/sample.png" // Placeholder image
-                            alt="NFT Preview"
-                        />
-                    </Card>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h4" gutterBottom>
-                        Mint Your NFT
-                    </Typography>
-                    <CardContent>
-                        <TextField
-                            fullWidth
-                            label="Quantity"
-                            type="number"
-                            value={quantity}
-                            onChange={handleQuantityChange}
-                            InputProps={{ inputProps: { min: 1 } }}
-                            sx={{ mb: 2 }}
-                        />
-                        <Typography variant="h6" gutterBottom>
-                            Mint Price: {totalPrice} ETH
+            <DashboardLayout>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={6}>
+                        <Card>
+                            <CardMedia
+                                component="img"
+                                height="400"
+                                image="/sample.png" // Placeholder image
+                                alt="NFT Preview"
+                            />
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h4" gutterBottom>
+                            Mint Your NFT
                         </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
-                            <Button variant="contained" color="primary" onClick={handleMintNFT}>
-                                Pay with Crypto
-                            </Button>
-                            <Button variant="contained" onClick={togglePopup} sx={{ display: 'flex', alignItems: 'center' }}>
-                                <img
-                                    src="/logo.png" // Path to your BCS logo
-                                    alt="BCS"
-                                    style={{ width: 24, height: 24, marginRight: 8 }}
-                                />
-                                Pay with BCS
-                            </Button>
-                        </Box>
-                    </CardContent>
+                        <CardContent>
+                            <TextField
+                                fullWidth
+                                label="Quantity"
+                                type="number"
+                                value={quantity}
+                                onChange={handleQuantityChange}
+                                InputProps={{ inputProps: { min: 1 } }}
+                                sx={{ mb: 2 }}
+                            />
+                            <Typography variant="h6" gutterBottom>
+                                Mint Price: {totalPrice} ETH
+                            </Typography>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
+                                <Button variant="contained" color="primary" onClick={handleMintNFT}>
+                                    Pay with Crypto
+                                </Button>
+                                <Button variant="contained" onClick={togglePopup} sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#4CAF50', color: 'white' }}>
+                                    <img
+                                        src="/logo.png" // Path to your BCS logo
+                                        alt="BCS"
+                                        style={{ width: 24, height: 24, marginRight: 8 }}
+                                    />
+                                    Pay with BCS
+                                </Button>
+                            </Box>
+                        </CardContent>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </DashboardLayout>
             {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={totalPrice} transactionFees={.001} />}
         </Container>
     );
