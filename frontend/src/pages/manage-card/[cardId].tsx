@@ -67,12 +67,10 @@ const ManageCard = () => {
 
         {/* Card Details */}
         <Typography variant="h6">Current Balance: ${card.CurrentBalance}</Typography>
-        <Typography variant="h6">Statement Balance: </Typography>
-        <Typography variant="h6">Statement Due Date: </Typography>
-        <Typography variant="h6">Rewards:</Typography>
+        <Typography variant="h6">Next Statement Date: April 18th: </Typography>
 
         <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleOpen}>
-          Pay Statement
+          Pay Off Balance
         </Button>
         <Modal open={open} onClose={handleClose}>
           <Box sx={modalStyle}>

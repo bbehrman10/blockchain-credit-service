@@ -7,7 +7,7 @@ import "hardhat/console.sol";
 
 contract VendorExample is ERC721Enumerable, Ownable {
     uint256 private _currentTokenID = 0;
-    uint256 public mintPrice = 0.44 ether; // Set initial mint price
+    uint256 public mintPrice = 0.001 ether; // Set initial mint price
     event Mint(address indexed to, uint256 tokenId);
 
     mapping(uint256 => address) public tokenToHolder;

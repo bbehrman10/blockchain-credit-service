@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react';
 import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -19,8 +20,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <List>
         {[
           { title: 'Overview', path: 'dashboard' },
-          { title: 'Rewards', path: 'rewards' },
-          { title: 'Transaction History', path: 'transactions' },
+          { title: 'Rewards [COMING SOON]', path: 'rewards' },
           { title: "Sample Vendor [DEMO]", path: "vendor" },
         ].map(({ title, path }) => (
           <ListItem key={title} disablePadding>
@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       </List>
     </Box>
   );
-  
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -45,7 +45,8 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             onClick={handleDrawerToggle}
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <Image src="/logo.png" alt="Logo" width={50} height={50} />
+
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Blockchain Credit Service [DEMO BUILD]

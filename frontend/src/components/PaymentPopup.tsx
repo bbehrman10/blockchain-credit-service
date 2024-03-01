@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Modal,
   Box,
@@ -27,6 +28,7 @@ interface PaymentPopupProps {
   predefinedWallets: Wallet[];
   transactionCost: number;
   transactionFees: number;
+  clientID: string;
 }
 
 const PaymentPopup: React.FC<PaymentPopupProps> = ({
@@ -35,19 +37,36 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
   predefinedWallets,
   transactionCost,
   transactionFees,
+  clientID,
 }) => {
-  const [step, setStep] = useState<number>(0); // Start from the initial loading step
+  const [step, setStep] = useState<number>(0);
   const [selectedWallet, setSelectedWallet] = useState<string>('');
+  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [selectedCard, setSelectedCard] = useState();
+  const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState<number>(0);
+  const userID = 1;
 
-  // Handle selection of wallet from dropdown
+
   const handleSelectWallet = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelectedWallet(event.target.value as string);
   };
 
-  // Handle confirmation of payment, simulate payment processing
-  const handleConfirmPayment = () => {
-    setStep(5); // Move to processing payment step
+  const handleSelectCard = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedCard(event.target.value as string);
+  }
+
+
+  async function handleConfirmPayment (cardID: string, clientID: string, amount: number, functionInputs: []) {
+    setStep(5);
+    const response = await axios.post('http://localhost:3001/api/payments/pay-vendor', {
+      cardID: cardID,
+      clientID: clientID,
+      Amount: amount,
+      functionInputs: functionInputs,
+      
+    });
+    console.log("data response", response.data);
     const interval = setInterval(() => {
       setProgress((oldProgress) => {
         const newProgress = oldProgress + 10;
@@ -60,23 +79,40 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
     }, 200);
   };
 
-  // Function to navigate back to the previous step
+
   const handleBack = () => {
     setStep((prevStep) => Math.max(prevStep - 1, 1));
   };
 
-  // Calculate the total cost including transaction fees
+
   const totalCost: number = transactionCost + transactionFees;
   useEffect(() => {
-    // Only run this effect if the modal is open and we're on the initial step
     if (open && step === 0) {
       const timer = setTimeout(() => {
         setStep(1); // Move to the login step after a delay
       }, 2000); // 2 seconds delay for the initial loading
 
-      return () => clearTimeout(timer); // Cleanup the timer if the component unmounts or if the dependencies change
+      return () => clearTimeout(timer);
     }
   }, [open, step]);
+
+  useEffect(() => {
+    if (step == 2) {
+      getUserCards(); 
+      //getUserWallets();
+    }
+  }, [step])
+
+  async function getUserCards() {
+    const response = await axios.get(`http://localhost:3001/api/users/${userID}/cards`);
+    setCards(response.data);
+  }
+
+  async function initiatePayment() {
+    // console log all the inputs:
+    
+  }
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4, borderRadius: 2 }}>
@@ -100,15 +136,27 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
             <FormControl fullWidth sx={{ mb: 2 }}>
               <InputLabel id="select-wallet-label">Wallet Address</InputLabel>
               <Select labelId="select-wallet-label" id="select-wallet" value={selectedWallet} label="Wallet Address" onChange={handleSelectWallet}>
-                {predefinedWallets.map(wallet => (
+                {predefinedWallets.map((wallet) => (
                   <MenuItem key={wallet.id} value={wallet.address}>{`${wallet.label} (${wallet.address})`}</MenuItem>
                 ))}
               </Select>
             </FormControl>
+
+            <Typography variant="h6" sx={{ mb: 2 }}>Select Card</Typography>
+            <FormControl fullWidth sx={{ mb: 2 }}>
+              <InputLabel id="select-card-label">Card</InputLabel>
+              <Select labelId="select-card-label" id="select-card" value={selectedCard} label="Card" onChange={handleSelectCard}>
+                {cards.map((card) => (
+                  <MenuItem key={card.CardID} value={card.CardID}>{card.Label}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <Button variant="contained" onClick={() => setStep(3)} fullWidth>Continue to Payment</Button>
             <Button variant="text" onClick={handleBack} sx={{ mt: 2 }}>Back</Button>
           </>
         )}
+
 
         {step === 3 && (
           <>
@@ -127,7 +175,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
                 <ListItemText primary="Total Cost" secondary={`${totalCost} ETH`} />
               </ListItem>
             </List>
-            <Button variant="contained" onClick={handleConfirmPayment} fullWidth>Confirm Payment</Button>
+            <Button variant="contained" onClick={() => handleConfirmPayment(selectedCard, clientID, totalCost, [selectedWallet, 1])} fullWidth>Confirm Payment</Button>
             <Button variant="text" onClick={handleBack} sx={{ mt: 2 }}>Back</Button>
           </>
         )}

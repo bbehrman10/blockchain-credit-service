@@ -5,64 +5,56 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <Container maxWidth="lg">
+                  <Box sx={{ position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
+        <Image src="/logo.png" alt="Logo" width={100} height={100} />
+      </Box>
       <Box sx={{ my: 4, textAlign: 'center' }}>
-        <Typography variant="h2" component="h1" gutterBottom>
-          Welcome to Blockchain Credit Service
+        <Typography variant="h1" component="h1" gutterBottom fontWeight='normal'>
+          Blockchain Credit Service 
         </Typography>
-        <Typography variant="h6" sx={{ mb: 3 }}>
-          Revolutionizing how you interact with blockchains.
+        <Typography variant="h4" gutterBottom>
+          Web2 Payments for a Web3 World
         </Typography>
-
-        <Box
-          sx={{
-            p: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Image
-            src="/logo.png" // Ensure you have a relevant SVG/image in your public folder
-            alt="Blockchain Credit Service"
-            width={180}
-            height={180}
-            priority
-          />
-          <Link href="/auth" passHref>
+        <Box sx={{ mt: 4 }}>
+          <Grid container spacing={3} justifyContent="center">
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 2, textAlign: 'center', bgcolor: '#f5f5f5' }} elevation={3}>
+                <Typography variant="h5" component="h3" gutterBottom>
+                Our Mission
+                </Typography>
+                <Typography variant="body1">
+                Crypto operates like a cash only economy. We are here to change that.
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 2, textAlign: 'center', bgcolor: '#f5f5f5' }} elevation={3}>
+                <Typography variant="h5" component="h3" gutterBottom>
+                  Codebase
+                </Typography>
+                <Typography variant="body1">
+                 Learn more about our codebase here
+                </Typography>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Paper sx={{ p: 2, textAlign: 'center', bgcolor: '#f5f5f5' }} elevation={3}>
+                <Typography variant="h5" component="h3" gutterBottom>
+                  Get Started Today
+                </Typography>
+                <Typography variant="body1">
+                  Join us and experience the future of finance.
+                </Typography>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Box>
+        <Box sx={{ mt: 4 }}>
+          <Link href="/login" passHref>
             <Button variant="contained" size="large">Get Started</Button>
           </Link>
         </Box>
       </Box>
-
-      <Paper elevation={3} sx={{ p: 2, mt: 4 }}>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} md={4}>
-            <Typography variant="h5" component="h3" gutterBottom>
-              Why BCS?
-            </Typography>
-            <Typography>
-              Ever wanted a credit card that works with your favorite blockchain? Look no further.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h5" component="h3" gutterBottom>
-              Learn More
-            </Typography>
-            <Typography>
-              Explore how our service works
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="h5" component="h3" gutterBottom>
-              Get Started
-            </Typography>
-            <Typography>
-              Ready to dive in? Sign up today.
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
     </Container>
   );
 }

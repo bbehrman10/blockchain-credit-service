@@ -16,13 +16,6 @@ contract BCSVault is Ownable, VaultInterface{
     require(_bcsContract != address(0), "BCS contract address cannot be zero.");
     bcsContract = _bcsContract;
 }
-    // function sendFunds(address payable recipient, uint256 amount) external {
-    //     require(msg.sender == bcsContract, "Unauthorized");
-    //     require(address(this).balance >= amount, "Insufficient funds");
-
-    //     (bool success, ) = recipient.call{value: amount}("");
-    //     require(success, "Failed to send Ether");
-    // }
 
     function callBCSVendor(address payable vendorAddr, bytes calldata encodedFunctionCall, uint256 paymentAmount) external {
             require(msg.sender == bcsContract, "Unauthorized");

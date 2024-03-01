@@ -1,20 +1,19 @@
-// const { ethers } = require('ethers');
-// const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
-// const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-// // Assuming BSC contract ABI includes callBSCVendor
-// const bscContract = new ethers.Contract(process.env.BSC_CONTRACT_ADDRESS, JSON.parse(process.env.BSC_CONTRACT_ABI), signer);
+require('dotenv').config();
+const contractABI  = require('./abi/BCS.json');
+const { ethers } = require('ethers');
+const provider = new ethers.JsonRpcProvider("https://sepolia.base.org");
 
-// exports.processVendorTransaction = async ({ userAddress, vendorClient, functionInputs }) => {
-//     const functionSignature = vendorClient.functionSignature;
-//     const contractAddress = vendorClient.contractAddress;
-
-//     const iface = new ethers.Interface([functionSignature]);
-//     const encodedFunctionCall = iface.encodeFunctionData(functionSignature, functionInputs);
-
-//     const bcsTx = await bscContract.callBSCVendor(contractAddress, encodedFunctionCall);
-//     const bcsTxReceipt = await bcsTx.wait();
-//     // needs error handling
-//     //also onced finished we need to return the transaction data back so we can store it\
-
-//     //return tx id
-// };
+exports.submitVendorTxToChain = async (vendorClient, functionInputs, activityAmount) => {
+    const signer = new ethers.Wallet('SERVICE PRIVATE KEY GOES HERE', provider);
+    const iface = new ethers.Interface([vendorClient.FunctionSignature]);
+    const encodedFunctionCall = iface.encodeFunctionData(vendorClient.FunctionName, functionInputs);
+    const bcsContract = new ethers.Contract("0x73fb9660FB320F01acDB5873D6fe10a03439594f", contractABI.abi, signer);
+    const amountInWei = ethers.parseEther(activityAmount.toString());
+    // return "hash used for testing purposes";
+    try {
+        const bcsTx = await bcsContract.callBCSVendor(vendorClient.ContractAddress, encodedFunctionCall, amountInWei);
+        return bcsTx.transactionHash;
+    } catch (error) {
+        console.error("Error calling BCS contract:", error);
+    }
+}

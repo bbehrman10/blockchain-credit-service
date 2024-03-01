@@ -13,12 +13,16 @@ module.exports = (sequelize, DataTypes) => {
     Description: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
-,    ContractAddress: {
+    },
+    ContractAddress: {
       type: DataTypes.STRING,
       allowNull: false
     },
     FunctionSignature: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    FunctionName: {
       type: DataTypes.STRING,
       allowNull: false
     },

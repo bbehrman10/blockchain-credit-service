@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      FunctionName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       VendorID: {
         type: Sequelize.INTEGER,
         allowNull: false,

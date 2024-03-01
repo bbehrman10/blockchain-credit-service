@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require ('dotenv').config();
 
 module.exports = {
   solidity: {
@@ -10,4 +11,11 @@ module.exports = {
       }
     }
   },
+  networks: {
+    'base-sepolia': {
+      url: 'https://sepolia.base.org',
+      accounts: [process.env.SERVICE_PRIVATE_KEY, process.env.VENDOR_PRIVATE_KEY],
+      gasPrice: 1000000000,
+    },
+  }
 };

@@ -18,7 +18,7 @@ async function seedVendors() {
 }
 
 async function seedVendorClients() {
-    const vendorClient1 = await director.vendor.createVendorClient(vendorclients[0].Description, vendorclients[0].ContractAddress, vendorclients[0].FunctionSignature, vendorclients[0].WhiteListedURL, vendorclients[0].VendorID);
+    const vendorClient1 = await director.vendor.createVendorClient(vendorclients[0].Description, vendorclients[0].ContractAddress, vendorclients[0].FunctionSignature, vendorclients[0].FunctionName, vendorclients[0].WhiteListedURL, vendorclients[0].VendorID);
     console.log('Vendor client created', vendorClient1);
     return vendorClient1.ClientID;
 }
@@ -31,7 +31,7 @@ async function seedCard() {
 
 async function seedTransaction(id) {
     // console.log(tx);
-    const tx1 = await director.vendor.payVendor(tx[0].CardID, id, tx[0].Amount, tx[0].Type);
+    const tx1 = await director.vendor.payVendor(tx[0].CardID, id, tx[0].Amount, tx[0].Type, ["0xd10e5abd1a1FaAE89c4969d500dD472dD29F900e", 3]);
     console.log('Transaction created', tx1);
 }
 
@@ -47,12 +47,15 @@ async function getCards() {
 }
 
 async function main() {
-    // await seedUsers();
-    // await seedCard();
-    // await seedVendors();
-    // const id = await seedVendorClients();
-    await seedTransaction('477771de-52a5-417f-8e81-b851701c2727') ;
-    // await getCards();
+    await seedUsers();
+    await seedVendors();
+    const id = await seedVendorClients();
+
+    // const id = "aee69dee-827d-46be-8631-13434336e283"
+    // await seedTransaction(id);
 }
 
-main();
+main();   
+
+
+// await seedCard();

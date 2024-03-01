@@ -1,8 +1,8 @@
 const tx = [
     {
         CardID: 1,
-        ClientID: 'c7159a88-b2e3-4587-8828-424fed3cdd65',
-        Amount: 1.05,
+        ClientID: 'aee69dee-827d-46be-8631-13434336e283',
+        Amount: 0.05,
         Type: 'Purchase',
     }
 ]

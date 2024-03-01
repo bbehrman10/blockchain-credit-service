@@ -69,7 +69,7 @@ export default function Dashboard() {
                                             <Typography variant="h6">{card.Label}</Typography>
                                             <Typography variant="body1">Credit Limit {card.CreditLimit} </Typography>
                                             <Typography variant="body1">Current Balance: {card.CurrentBalance} </Typography>
-                                            <Typography variant="body1">Statement Due Date: COMING SOON </Typography>
+                                            <Typography variant="body1">Next Statement Date: April 18th </Typography>
                                             {/* Additional card details can be added here */}
                                         </CardContent>
                                     </Card>
@@ -113,7 +113,7 @@ export default function Dashboard() {
                                             <TableCell>{transaction.CardID}</TableCell> {/* Displaying last 4 digits */}
                                             <TableCell>{transaction.Amount} ETH</TableCell>
                                             <TableCell>${transaction.USDEquivalent}</TableCell>
-                                            <TableCell>{transaction.VendorClientID}</TableCell>
+                                            <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>
                                             <TableCell>{transaction.Type}</TableCell>
                                             <TableCell>{transaction.Status}</TableCell>
                                             <TableCell>{transaction.BlockchainTransactionID}</TableCell>

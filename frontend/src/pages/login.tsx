@@ -3,6 +3,7 @@ import { Button, Container, TextField, Typography, Box } from '@mui/material';
 import Link from 'next/link';
 import axios from 'axios';
 import router from 'next/router';
+import Image from 'next/image';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -28,6 +29,9 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
+                  <Box sx={{ position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
+        <Image src="/logo.png" alt="Logo" width={100} height={100} />
+      </Box>
       <Box
         sx={{
           marginTop: 8,

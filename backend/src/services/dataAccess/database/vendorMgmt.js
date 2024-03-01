@@ -56,6 +56,7 @@ exports.createVendorClient = async (vendorClientData) => {
             Description: vendorClientData.Description,
             ContractAddress: vendorClientData.ContractAddress,
             FunctionSignature: vendorClientData.FunctionSignature,
+            FunctionName: vendorClientData.FunctionName,
             WhiteListedURL: vendorClientData.WhiteListedURL,
             VendorID: vendorClientData.VendorID
         });

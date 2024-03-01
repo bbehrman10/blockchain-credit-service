@@ -19,9 +19,17 @@ exports.createCreditActivity = async (activity) => {
 exports.getCreditActivity = async (cardID) => {
     try {
         const creditActivity = await CreditActivity.findAll({
-            where: {
-                CardID: cardID
-            }
+            where: {CardID: cardID},
+            include: [
+                {
+                  model: VendorClient,
+                  as: 'vendorClient',
+                  include: {
+                    model: Vendor,
+                    as: 'vendor'
+                  }
+                }
+              ]
         });
         return creditActivity;
     } catch (error) {
