@@ -60,7 +60,7 @@ For example, a financial literacy organization can onboard its students with a 5
 ### Roadmap
 
 2024 Q2/Q3 
-– Compliance: CARD Act, Consumer Financial Protection Bureau
+- Compliance: CARD Act, Consumer Financial Protection Bureau
 - Collateralization: Find additional organizations to provide on-chain capital
 - Merchant: Identify and interview and onboard 3 merchants
 - Credit Score: Additional API integration for credit score data
