@@ -49,3 +49,25 @@ Users can then view all of their crypto transactions on the dashboard and pay of
 ### Architecture
 <img width="1079" alt="Screenshot 2024-03-02 at 8 40 49 AM" src="https://github.com/bbehrman10/blockchain-credit-service/assets/17752402/7b0aa4c4-b95e-49bd-bf15-5d483d5174d3">
 
+### Collateralization
+
+There are a variety of entities that can provide collateral on chain for users to draw from. DAOs, COOPs, Credit Unions, Non-profits, NGOs, and any corporate entity can engage existing or new constituents.
+
+In addition to basic credit approval from traditional consumer credit rating agencies, each entity will be able to codify (in smart contract) additional parameters.  These parameters can be based on their existing organizational participation metrics, membership class. 
+
+For example, a financial literacy organization can onboard its students with a 50 USD credit. As a student progresses through a financial literacy program, completing modules, their Blockchain Credit Service credit can increase 25 USD for each module they complete. 
+
+### Roadmap
+
+2024 Q2/Q3 – Compliance – CARD Act, Consumer Financial Protection Bureau.
+		Collateralization – Find additional organizations to provide on-chain capital
+		Merchant – Identify and interview and onboard 3 merchants
+		Credit Score – Additional API integration for credit score data
+
+
+2024 Q4 - 	Compliance – Fair Credit Reporting Act compliance
+		Credit Score – Achieve data reqs. for reporting back to Credit Agency API
+		Merchant – Additional onboarding
+		Collateralization – Org Dashboard with NFT & ZK driven credit limits
+
+
