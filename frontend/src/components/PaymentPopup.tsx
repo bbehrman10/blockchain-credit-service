@@ -148,7 +148,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
               <InputLabel id="select-card-label">Card</InputLabel>
               <Select labelId="select-card-label" id="select-card" value={selectedCard} label="Card" onChange={handleSelectCard}>
                 {cards.map((card) => (
-                  <MenuItem key={card.CardID} value={card.CardID}>{card.Label}</MenuItem>
+                  <MenuItem key={card.CardID} value={card.CardID}>{card.Label} {card.CardID}</MenuItem>
                 ))}
               </Select>
             </FormControl>

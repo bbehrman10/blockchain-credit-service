@@ -5,25 +5,24 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <Container maxWidth="lg">
-                  <Box sx={{ position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
+      <Box sx={{ position: 'fixed', top: 0, left: 0, zIndex: 1000 }}>
         <Image src="/logo.png" alt="Logo" width={100} height={100} />
       </Box>
       <Box sx={{ my: 4, textAlign: 'center' }}>
         <Typography variant="h1" component="h1" gutterBottom fontWeight='normal'>
-          Blockchain Credit Service 
+          Blockchain Credit Service
         </Typography>
         <Typography variant="h4" gutterBottom>
-          Web2 Payments for a Web3 World
-        </Typography>
+          Activate Non-Collateralized Credit On-Chain        </Typography>
         <Box sx={{ mt: 4 }}>
           <Grid container spacing={3} justifyContent="center">
             <Grid item xs={12} md={6}>
               <Paper sx={{ p: 2, textAlign: 'center', bgcolor: '#f5f5f5' }} elevation={3}>
                 <Typography variant="h5" component="h3" gutterBottom>
-                Our Mission
+                  Our Mission
                 </Typography>
                 <Typography variant="body1">
-                Crypto operates like a cash only economy. We are here to change that.
+                  Crypto operates like a cash only economy. We are here to change that.
                 </Typography>
               </Paper>
             </Grid>
@@ -33,7 +32,7 @@ export default function Home() {
                   Codebase
                 </Typography>
                 <Typography variant="body1">
-                 Learn more about our codebase here
+                  Learn more about our codebase here
                 </Typography>
               </Paper>
             </Grid>
@@ -50,7 +49,7 @@ export default function Home() {
           </Grid>
         </Box>
         <Box sx={{ mt: 4 }}>
-          <Link href="/login" passHref>
+          <Link href="/dashboard" passHref>
             <Button variant="contained" size="large">Get Started</Button>
           </Link>
         </Box>

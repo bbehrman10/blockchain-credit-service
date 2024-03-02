@@ -60,7 +60,7 @@ export default function Dashboard() {
                                             alt="Credit Card Image"
                                         />
                                         <CardContent>
-                                            <Typography variant="h6">{card.Label}</Typography>
+                                            <Typography variant="h6">{card.Label} {card.CardID}</Typography>
                                             <Typography variant="body1">
                                                 Credit Limit: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(card.CreditLimit)}
                                             </Typography>                                            
@@ -108,7 +108,7 @@ export default function Dashboard() {
                                     {transactions.map((transaction, index) => (
                                         <TableRow key={transaction.ActivityID}>
                                             <TableCell>{Date(transaction.createdAt)}</TableCell>
-                                            <TableCell>{transaction.card.Label}</TableCell>
+                                            <TableCell>{transaction.card.Label} {transaction.card.CardID}</TableCell>
                                             <TableCell>{transaction.Amount} ETH</TableCell>
                                             <TableCell>${transaction.USDEquivalent}</TableCell>
                                             <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>

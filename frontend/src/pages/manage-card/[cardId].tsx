@@ -57,7 +57,7 @@ const ManageCard = () => {
     <DashboardLayout>
       <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Typography variant="h4" gutterBottom>
-          Manage Card - {card.Label}
+          Manage Card - {card.Label} {card.CardID}
         </Typography>
 
         {/* Card Details */}
@@ -125,7 +125,7 @@ const ManageCard = () => {
                 {cardTxData.map((transaction, index) => (
                   <TableRow key={transaction.ActivityID}>
                     <TableCell>{Date(transaction.createdAt)}</TableCell>
-                    <TableCell>{transaction.card.Label}</TableCell>
+                    <TableCell>{transaction.card.Label} {transaction.card.CardID}</TableCell>
                     <TableCell>{transaction.Amount} ETH</TableCell>
                     <TableCell>${transaction.USDEquivalent}</TableCell>
                     <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>
