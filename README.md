@@ -3,8 +3,7 @@
 
 # Blockchain Credit Service - EthDenver 2024 Submission
 
-Ben Behrman
-Dave Anderson
+Ben Behrman, Dave Anderson
 
 ## Project Overview
 Cryptocurrency markets and Web3 applications primarily operate within a cash-only economy, presenting significant hurdles for users who lack immediate access to digital assets. Additionally, the process of bridging between different blockchain networks can be complex and daunting for retail consumers, limiting their participation in the broader ecosystem. Furthermore,  users cannot leverage their existing credit histories with them on chain.
@@ -46,3 +45,7 @@ Once a user has signed up for BCS and linked their crypto wallet, they can apply
 They are then able to go to a vendor and use crypto as anyone else would just using the Pay with BCS option. Under the hood the payment popup submits a transaction to the BCS main smart contract which then calls the vendor's contract using the user's parameters. The vendor processes the transaction and in this case mints an NFT to the user's wallet. This transaction and the amount in USD is then stored in the database and the user's credit balance is adjusted.
 
 Users can then view all of their crypto transactions on the dashboard and pay off their card's balance.
+
+### Architecture
+<img width="1079" alt="Screenshot 2024-03-02 at 8 40 49 AM" src="https://github.com/bbehrman10/blockchain-credit-service/assets/17752402/7b0aa4c4-b95e-49bd-bf15-5d483d5174d3">
+
