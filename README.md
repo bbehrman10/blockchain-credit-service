@@ -26,7 +26,7 @@ The payment popup is a React component made to be installed and configured by an
 
 The vendor is purely here for demo purposes. It implements the BCS popup portal. It has a registered ID that links back to the BCS database for verification.
 
-### API & Services - Node, Express, EthersJS (Within Backend
+### API & Services - Node, Express, EthersJS
 The service layer ultimately directs API calls to their proper destination, whether it's the database, the blockchain, or an external API and then returns the  result to the frontend.
 
 ### Data Layer - PostgreSQL, Solidity
