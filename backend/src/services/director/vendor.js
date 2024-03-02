@@ -69,14 +69,14 @@ exports.payVendor = async (cardID, clientID, activityAmount, activityDescription
             type: 'Purchase',
             description: activityDescription
         };
-        const incompleteTx = await transactionMgmt.createCreditActivity(newActivity);
+        // const incompleteTx = await transactionMgmt.createCreditActivity(newActivity);
         const bchainTx = await blockchain.submitVendorTxToChain(vendorClient, functionInputs, activityAmount);
-        // //convert crypto to USD function
-        const usd = await convertEthToSD(activityAmount);
-        const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, bchainTx, usd);
-        //push notification - quicknode alerts
-        const updateCard = await creditMgmt.updateCardBalance(cardID, usd);
-        return completeTx;
+        // // //convert crypto to USD function
+        // const usd = await convertEthToSD(activityAmount);
+        // const completeTx = await transactionMgmt.updateActivity(incompleteTx.ActivityID, bchainTx, usd);
+        // //push notification - quicknode alerts
+        // const updateCard = await creditMgmt.updateCardBalance(cardID, usd);
+        // return completeTx;
     } catch (error) {
         console.error('Error with processing transaction', error);
         throw error;

@@ -101,14 +101,20 @@ exports.getCardActivity = async ( cardID ) => {
         await sequelize.authenticate();
         const transactions = await CreditActivity.findAll({
             where: { CardID: cardID },
-            include: {
-                model: VendorClient, 
-                as: 'vendorClient',
-                include: {
+            include: [
+                {
+                  model: VendorClient,
+                  as: 'vendorClient',
+                  include: {
                     model: Vendor,
                     as: 'vendor'
+                  }
+                },
+                {
+                  model: Card,
+                  as: 'card'
                 }
-            },
+              ],
             order: [['createdAt', 'DESC']],
             limit: 30
         });

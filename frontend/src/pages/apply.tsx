@@ -42,7 +42,6 @@ const Apply = () => {
     e.preventDefault();
     // eventually - submit credit check api respond with approval or denial
     router.push('/approval');
-    alert('Application Submitted');
   };
 
   return (

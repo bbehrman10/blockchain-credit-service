@@ -19,7 +19,7 @@ exports.createCard = async (userID) => {
             userID: userID
         }
         const newCard = await creditMgmt.createCard(card);
-        return card
+        return newCard
     } catch (error) {
         console.error('Error creating card', error);
         throw error;

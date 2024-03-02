@@ -28,6 +28,10 @@ exports.getCreditActivity = async (cardID) => {
                     model: Vendor,
                     as: 'vendor'
                   }
+                },
+                {
+                  model: Card,
+                  as: 'card'
                 }
               ]
         });

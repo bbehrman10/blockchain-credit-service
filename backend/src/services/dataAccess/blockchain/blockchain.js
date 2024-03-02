@@ -1,18 +1,18 @@
 require('dotenv').config();
 const contractABI  = require('./abi/BCS.json');
 const { ethers } = require('ethers');
-const provider = new ethers.JsonRpcProvider("https://sepolia.base.org");
+const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 
 exports.submitVendorTxToChain = async (vendorClient, functionInputs, activityAmount) => {
-    const signer = new ethers.Wallet('SERVICE PRIVATE KEY GOES HERE', provider);
+    const signer = new ethers.Wallet(process.env.SERVICE_PRIVATE_KEY, provider);
     const iface = new ethers.Interface([vendorClient.FunctionSignature]);
     const encodedFunctionCall = iface.encodeFunctionData(vendorClient.FunctionName, functionInputs);
-    const bcsContract = new ethers.Contract("0x73fb9660FB320F01acDB5873D6fe10a03439594f", contractABI.abi, signer);
+    const bcsContract = new ethers.Contract(process.env.BCS_ADDRESS, contractABI.abi, signer);
     const amountInWei = ethers.parseEther(activityAmount.toString());
     // return "hash used for testing purposes";
     try {
         const bcsTx = await bcsContract.callBCSVendor(vendorClient.ContractAddress, encodedFunctionCall, amountInWei);
-        return bcsTx.transactionHash;
+        return bcsTx.hash;
     } catch (error) {
         console.error("Error calling BCS contract:", error);
     }

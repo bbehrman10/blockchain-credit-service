@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import DashboardLayout from '../../components/DashboardLayout';
 import { useEffect, useState } from 'react';
-import { Container, Typography, Table, TableBody, TableCell, TableHead, TableRow, TextField, Paper, Button, Modal, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel, Box } from '@mui/material';
+import { Container, Typography, Table, TableBody, TableCell, TableHead, TableRow, TextField, Card, CardHeader, CardContent, Button, Modal, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel, Box } from '@mui/material';
 import axios from 'axios';
 const userID = "1"; // Adjust as needed
 
@@ -43,13 +43,8 @@ const ManageCard = () => {
     setCard(cardData.data);
     setCardTxData(activityData.data);
   }
-  // Get the last 5 transactions for this card
-  const lastFiveTransactions = async () => {
-    return [];
-  }
 
   useEffect(() => {
-    // console.log('RUNNING THE USE EFFECT FUNCTION');
     getPageData(cardId);
   }, []);
 
@@ -105,37 +100,48 @@ const ManageCard = () => {
           </Box>
         </Modal>
         {/* RecentTransactions */}
-        <Typography variant="h5" sx={{ mt: 4 }}>Recent Transactions</Typography>
-        <Paper sx={{ width: '100%', overflow: 'hidden', mt: 2 }}>
-          <Table aria-label="recent transactions">
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Card Used</TableCell>
-                <TableCell>Amount (ETH)</TableCell>
-                <TableCell>USD Equivalent</TableCell>
-                <TableCell>Vendor</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Blockchain Transaction ID</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cardTxData.map((transaction, index) => (
-                <TableRow key={transaction.ActivityID}>
-                  <TableCell>{transaction.createdAt}</TableCell>
-                  <TableCell>{transaction.CardID}</TableCell> {/* Displaying last 4 digits */}
-                  <TableCell>{transaction.Amount} ETH</TableCell>
-                  <TableCell>${transaction.USDEquivalent}</TableCell>
-                  <TableCell>{transaction.VendorClientID}</TableCell>
-                  <TableCell>{transaction.Type}</TableCell>
-                  <TableCell>{transaction.Status}</TableCell>
-                  <TableCell>{transaction.BlockchainTransactionID}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
+        <Card sx={{ mt: 2 }}>
+                        <CardHeader title="Recent Transactions" />
+                        <CardContent>
+                            <Table size="medium">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Date</TableCell>
+                                        <TableCell>Card Used</TableCell>
+                                        <TableCell>Amount (ETH)</TableCell>
+                                        <TableCell>USD Equivalent</TableCell>
+                                        <TableCell>Vendor</TableCell>
+                                        <TableCell>Type</TableCell>
+                                        <TableCell>Status</TableCell>
+                                        <TableCell>Blockchain Transaction Link</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {cardTxData.map((transaction, index) => (
+                                        <TableRow key={transaction.ActivityID}>
+                                            <TableCell>{Date(transaction.createdAt)}</TableCell>
+                                            <TableCell>{transaction.card.Label}</TableCell>
+                                            <TableCell>{transaction.Amount} ETH</TableCell>
+                                            <TableCell>${transaction.USDEquivalent}</TableCell>
+                                            <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>
+                                            <TableCell>{transaction.Type}</TableCell>
+                                            <TableCell>{transaction.Status}</TableCell>
+                                            <TableCell>
+                                                {transaction.BlockchainTransactionID ? (
+                                                    <a href={`https://base-sepolia.blockscout.com/tx/${transaction.BlockchainTransactionID}`} target="_blank" rel="noopener noreferrer">
+                                                        Go to Blockscout
+                                                    </a>
+                                                ) : (
+                                                    'Waiting for TxID'
+                                                )}
+                                            </TableCell>
+
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
       </Container>
     </DashboardLayout>
   );
