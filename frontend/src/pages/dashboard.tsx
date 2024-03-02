@@ -61,8 +61,12 @@ export default function Dashboard() {
                                         />
                                         <CardContent>
                                             <Typography variant="h6">{card.Label}</Typography>
-                                            <Typography variant="body1">Credit Limit {card.CreditLimit} </Typography>
-                                            <Typography variant="body1">Current Balance: {card.CurrentBalance} </Typography>
+                                            <Typography variant="body1">
+                                                Credit Limit: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(card.CreditLimit)}
+                                            </Typography>                                            
+                                            <Typography variant="body1">
+                                                Current Balance: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(card.CurrentBalance)}
+                                            </Typography> 
                                             <Typography variant="body1">Next Statement Date: April 18th </Typography>
                                             {/* Additional card details can be added here */}
                                         </CardContent>

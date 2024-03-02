@@ -4,12 +4,12 @@ import DashboardLayout from '@/components/DashboardLayout';
 import PaymentPopup from '@/components/PaymentPopup'; // Ensure this path is correct
 import nftData from '../data/nftData'; // Adjust the import path as needed
 
-const userData = {
+const userData = { // demo temp instead of fetching from API
     wallets: [
         {
             id: '1',
             address: '0xd10e5abd1a1FaAE89c4969d500dD472dD29F900e',
-            label: 'My Wallet'
+            label: 'MScott Wallet 1'
         }
     ]
 }
@@ -82,7 +82,7 @@ const NFTMint = () => {
                     </Grid>
                 </Grid>
             </DashboardLayout>
-            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={totalPrice} transactionFees={.0001}  clientID="b3442a67-0130-48fa-ba55-3488d93338b6" />}
+            {isPopupOpen && <PaymentPopup open={isPopupOpen} onClose={togglePopup} predefinedWallets={userData.wallets} transactionCost={totalPrice} quantity={quantity} transactionFees={.0001}  clientID="b3442a67-0130-48fa-ba55-3488d93338b6" />}
         </Container>
     );
 };

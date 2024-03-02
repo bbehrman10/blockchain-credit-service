@@ -34,6 +34,7 @@ interface PaymentPopupProps {
 const PaymentPopup: React.FC<PaymentPopupProps> = ({
   open,
   onClose,
+  quantity,
   predefinedWallets,
   transactionCost,
   transactionFees,
@@ -41,7 +42,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
 }) => {
   const [step, setStep] = useState<number>(0);
   const [selectedWallet, setSelectedWallet] = useState<string>('');
-  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const [wallets, setWallets] = useState<Wallet[]>([]); //eventually needed for querying user wallets
   const [selectedCard, setSelectedCard] = useState();
   const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState<number>(0);
@@ -175,7 +176,7 @@ const PaymentPopup: React.FC<PaymentPopupProps> = ({
                 <ListItemText primary="Total Cost" secondary={`${totalCost} ETH`} />
               </ListItem>
             </List>
-            <Button variant="contained" onClick={() => handleConfirmPayment(selectedCard, clientID, totalCost, [selectedWallet, 1])} fullWidth>Confirm Payment</Button>
+            <Button variant="contained" onClick={() => handleConfirmPayment(selectedCard, clientID, totalCost, [selectedWallet, quantity])} fullWidth>Confirm Payment</Button>
             <Button variant="text" onClick={handleBack} sx={{ mt: 2 }}>Back</Button>
           </>
         )}

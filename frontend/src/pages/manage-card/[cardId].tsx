@@ -61,7 +61,12 @@ const ManageCard = () => {
         </Typography>
 
         {/* Card Details */}
-        <Typography variant="h6">Current Balance: ${card.CurrentBalance}</Typography>
+        <Typography variant="h6">
+          Credit Limit: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(card.CreditLimit)}
+        </Typography>
+        <Typography variant="h6">
+          Current Balance: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(card.CurrentBalance)}
+        </Typography>
         <Typography variant="h6">Next Statement Date: April 18th: </Typography>
 
         <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleOpen}>
@@ -101,47 +106,47 @@ const ManageCard = () => {
         </Modal>
         {/* RecentTransactions */}
         <Card sx={{ mt: 2 }}>
-                        <CardHeader title="Recent Transactions" />
-                        <CardContent>
-                            <Table size="medium">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Date</TableCell>
-                                        <TableCell>Card Used</TableCell>
-                                        <TableCell>Amount (ETH)</TableCell>
-                                        <TableCell>USD Equivalent</TableCell>
-                                        <TableCell>Vendor</TableCell>
-                                        <TableCell>Type</TableCell>
-                                        <TableCell>Status</TableCell>
-                                        <TableCell>Blockchain Transaction Link</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {cardTxData.map((transaction, index) => (
-                                        <TableRow key={transaction.ActivityID}>
-                                            <TableCell>{Date(transaction.createdAt)}</TableCell>
-                                            <TableCell>{transaction.card.Label}</TableCell>
-                                            <TableCell>{transaction.Amount} ETH</TableCell>
-                                            <TableCell>${transaction.USDEquivalent}</TableCell>
-                                            <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>
-                                            <TableCell>{transaction.Type}</TableCell>
-                                            <TableCell>{transaction.Status}</TableCell>
-                                            <TableCell>
-                                                {transaction.BlockchainTransactionID ? (
-                                                    <a href={`https://base-sepolia.blockscout.com/tx/${transaction.BlockchainTransactionID}`} target="_blank" rel="noopener noreferrer">
-                                                        Go to Blockscout
-                                                    </a>
-                                                ) : (
-                                                    'Waiting for TxID'
-                                                )}
-                                            </TableCell>
+          <CardHeader title="Recent Transactions" />
+          <CardContent>
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Card Used</TableCell>
+                  <TableCell>Amount (ETH)</TableCell>
+                  <TableCell>USD Equivalent</TableCell>
+                  <TableCell>Vendor</TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Blockchain Transaction Link</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cardTxData.map((transaction, index) => (
+                  <TableRow key={transaction.ActivityID}>
+                    <TableCell>{Date(transaction.createdAt)}</TableCell>
+                    <TableCell>{transaction.card.Label}</TableCell>
+                    <TableCell>{transaction.Amount} ETH</TableCell>
+                    <TableCell>${transaction.USDEquivalent}</TableCell>
+                    <TableCell>{transaction.vendorClient.vendor.Name}</TableCell>
+                    <TableCell>{transaction.Type}</TableCell>
+                    <TableCell>{transaction.Status}</TableCell>
+                    <TableCell>
+                      {transaction.BlockchainTransactionID ? (
+                        <a href={`https://base-sepolia.blockscout.com/tx/${transaction.BlockchainTransactionID}`} target="_blank" rel="noopener noreferrer">
+                          Go to Blockscout
+                        </a>
+                      ) : (
+                        'Waiting for TxID'
+                      )}
+                    </TableCell>
 
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </CardContent>
-                    </Card>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </Container>
     </DashboardLayout>
   );
